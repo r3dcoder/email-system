@@ -3,11 +3,21 @@ import React, { useState, ChangeEvent } from 'react';
 import Link from 'next/link';
 import Select from '../Select';
 import CustomeInput from '../CustomInput';
- 
+import useApi from '@/utils/useApi';
+import { User } from '@/type/user';
+import { REGISTRATION } from '@/utils/api-urls';
+import { useRouter } from 'next/router';
+import { ValidationErrors, validateForm } from '@/utils/vallidation-utils';
+import { registrationValidationSchema } from '@/utils/validation-schema';
+
 const RegistrationForm: React.FC = () => {
 
     const [passwordMatchError, setPasswordMatchError] = useState('');
- 
+    const { apiResponse, call } = useApi<User>();
+    const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
+
+    const router = useRouter();
+
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -20,7 +30,7 @@ const RegistrationForm: React.FC = () => {
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
-         console.log(name, value)
+        console.log(name, value)
 
         setFormData((prevData) => ({
             ...prevData,
@@ -36,20 +46,43 @@ const RegistrationForm: React.FC = () => {
         }
     };
 
-    const handleSubmit = () => {
-        console.log("clicked")
+    const handleSubmit = async () => {
 
-         if (formData.password !== formData.confirmPassword) {
-            alert("Passwords don't match!");
+        const errors = validateForm(formData, registrationValidationSchema);
+        if (Object.keys(errors).length === 0) {
+            try {
+
+
+                // Perform registration logic here
+                const registrationUrl = REGISTRATION;
+                const response = await call(registrationUrl, 'POST', {
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                    email: formData.email,
+                    gender: formData.gender,
+                    password: formData.password,
+                });
+                console.log(".....................", response)
+                router.push({
+                    pathname: "/login",
+                    query: { success: true },
+                });
+
+            } catch (error) {
+                console.error('Registration failed:', error);
+                // Handle error, show an error message
+            }
         } else {
-            // Perform registration logic here
+            setValidationErrors(errors);
         }
-    }
-     return (
-        <div   className="flex h-screen bg-gray-100">
+
+    };
+
+
+    return (
+        <div className="flex h-screen bg-gray-100">
             <div className="m-auto w-full md:max-w-[450px] bg-white rounded-lg shadow-lg p-8">
-                <h2 className="text-2xl font-semibold mb-6">Create an Account</h2>
-                {formData.gender}--
+                <h2 className="text-2xl font-semibold mb-6 text-black">Create an Account</h2>
                 <div  >
                     <CustomeInput
                         label="First Name"
@@ -58,8 +91,10 @@ const RegistrationForm: React.FC = () => {
                         name="firstName"
                         placeholder="Enter your first name"
                         value={formData.firstName}
+                        errorMsg={validationErrors.firstName}
                         onChange={handleInputChange}
                     />
+
                     <CustomeInput
                         label="Last Name"
                         type="text"
@@ -67,6 +102,7 @@ const RegistrationForm: React.FC = () => {
                         name="lastName"
                         placeholder="Enter your last name"
                         value={formData.lastName}
+                        errorMsg={validationErrors.last}
                         onChange={handleInputChange}
                     />
                     <CustomeInput
@@ -76,6 +112,7 @@ const RegistrationForm: React.FC = () => {
                         name="email"
                         placeholder="Enter your email"
                         value={formData.email}
+                        errorMsg={validationErrors.email}
                         onChange={handleInputChange}
                     />
 
@@ -97,6 +134,7 @@ const RegistrationForm: React.FC = () => {
                         name="password"
                         placeholder="Enter your password"
                         value={formData.password}
+                        errorMsg={validationErrors.password}
                         onChange={handleInputChange}
                     />
                     <CustomeInput
@@ -106,18 +144,29 @@ const RegistrationForm: React.FC = () => {
                         name="confirmPassword"
                         placeholder="Confirm your password"
                         value={formData.confirmPassword}
+                        errorMsg={validationErrors.password}
                         onChange={handleInputChange}
                     />
 
                     {passwordMatchError && (
                         <p className="text-red-500 text-sm mb-2">{passwordMatchError}</p>
                     )}
-                    <button
-                       onClick={()=>handleSubmit()}
-                         className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
-                    >
-                        Register
-                    </button>
+                    {
+                        apiResponse.loading ?
+                            <button
+
+                                className="w-full bg-blue-550 text-white p-2 rounded-md hover:bg-blue-600"
+                            >
+                                Loading..
+                            </button>
+                            :
+                            <button
+                                onClick={() => handleSubmit()}
+                                className="w-full bg-blue-550 text-white p-2 rounded-md hover:bg-blue-600"
+                            >
+                                Register
+                            </button>
+                    }
                 </div>
                 <p className="mt-4 text-center text-sm text-gray-500">
                     Already have an account? <Link href="/login" className="text-blue-500">Sign In</Link>.

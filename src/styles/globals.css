@@ -2,26 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+/*  
+Primary Color: #3498db (Blue)
+Secondary Color: #e74c3c (Red)
+Background Color: #f5f5f5 (Light Gray)
+Text Color: #333333 (Dark Gray)
+Link Color: #2980b9 (Dark Blue)
+Accent Color: #27ae60 (Green)
+Button Color: #e67e22 (Orange) */

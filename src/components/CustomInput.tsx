@@ -8,15 +8,17 @@ interface InputProps {
   name: string; // Add the name property here
   placeholder?: string;
   value: string;
+  error?: boolean;
+  errorMsg?: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const CustomeInput: React.FC<InputProps> = ({ label, type, id, name, placeholder, value, onChange }) => {
-    const onInputChnage = (e:any)=>{
-        console.log("......................")
-        onChange(e)
-    }
-    return (
+const CustomeInput: React.FC<InputProps> = ({ label, type, id, name, placeholder, value, error = false, errorMsg = "", onChange }) => {
+  const onInputChnage = (e: any) => {
+    console.log("......................")
+    onChange(e)
+  }
+  return (
     <div className="mb-4">
       <label htmlFor={id} className="block font-medium text-gray-600">
         {label}
@@ -30,6 +32,9 @@ const CustomeInput: React.FC<InputProps> = ({ label, type, id, name, placeholder
         value={value}
         onChange={onInputChnage}
       />
+
+      {errorMsg && <div className="text-red-500 my-2">{errorMsg}</div>}
+
     </div>
   );
 };
