@@ -5,7 +5,10 @@ const RegistrationPage: React.FC = () => {
  
 
     return (
+      <div className='bg-gradient-to-r from-purple-300 to-indigo-600 h-screen flex'>
         <RegistrationForm/>
+      </div>
+        
     );
 };
 

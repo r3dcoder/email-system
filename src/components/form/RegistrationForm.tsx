@@ -80,7 +80,6 @@ const RegistrationForm: React.FC = () => {
 
 
     return (
-        <div className="flex h-screen bg-gray-100">
             <div className="m-auto w-full md:max-w-[450px] bg-white rounded-lg shadow-lg p-8">
                 <h2 className="text-2xl font-semibold mb-6 text-black">Create an Account</h2>
                 <div  >
@@ -155,14 +154,14 @@ const RegistrationForm: React.FC = () => {
                         apiResponse.loading ?
                             <button
 
-                                className="w-full bg-blue-550 text-white p-2 rounded-md hover:bg-blue-600"
+                                className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-blue-600"
                             >
                                 Loading..
                             </button>
                             :
                             <button
                                 onClick={() => handleSubmit()}
-                                className="w-full bg-blue-550 text-white p-2 rounded-md hover:bg-blue-600"
+                                className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-blue-600"
                             >
                                 Register
                             </button>
@@ -172,7 +171,6 @@ const RegistrationForm: React.FC = () => {
                     Already have an account? <Link href="/login" className="text-blue-500">Sign In</Link>.
                 </p>
             </div>
-        </div>
     );
 };
 

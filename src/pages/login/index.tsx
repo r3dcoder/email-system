@@ -49,8 +49,8 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <div className="m-auto w-96 bg-white rounded-lg shadow-lg p-8">
+    <div className='bg-gradient-to-r from-purple-300 to-indigo-600 h-screen flex'>
+      <div className="m-auto w-96 bg-white rounded-lg shadow-lg p-8 ">
         <h2 className="text-2xl font-semibold mb-6">Sign in to your account</h2>
         {successMessage && (
           <div className="bg-green-200 text-green-800 p-4 mb-4">
@@ -84,13 +84,13 @@ const LoginPage: React.FC = () => {
           />
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+            className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-blue-600"
           >
             Sign In
           </button>
         </form>
         <p className="mt-4 text-center text-sm text-gray-500">
-          Don't have an account? <Link href="/registration" className="text-blue-500">Create one</Link>.
+          Don't have an account? <Link href="/registration" className="text-indigo-600">Create one</Link>.
         </p>
       </div>
     </div>

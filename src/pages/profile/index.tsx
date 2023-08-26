@@ -6,7 +6,7 @@ const ProfilePage = () => {
 
     const handleLogout = () => {
         logout();
-        
+
     };
 
     return (
@@ -16,6 +16,8 @@ const ProfilePage = () => {
                     <h1>Welcome, {user.firstName}!</h1>
                     {/* Display other user information */}
                     <button onClick={handleLogout}>Logout</button>
+
+                    
                 </div>
             ) : (
                 <p>You are not logged in.</p>
