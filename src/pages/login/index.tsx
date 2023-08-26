@@ -1,12 +1,18 @@
-'use client'
 
 import React, { useState, ChangeEvent } from 'react';
 import Link from 'next/link';
 import CustomeInput from '@/components/CustomInput';
-  
+import { useRouter } from 'next/router';
+import useApi from '@/utils/useApi';
+import { SIGN_IN } from '@/utils/api-urls';
+
 const LoginPage: React.FC = () => {
+  const router = useRouter();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const successMessage = router.query.success;
+  const { apiResponse, call } = useApi<any>();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -19,14 +25,25 @@ const LoginPage: React.FC = () => {
 
   const handleLogin = (event: React.FormEvent) => {
     event.preventDefault();
-    // Perform login logic here
-    console.log('Logging in with:', email, password);
+    call(SIGN_IN, 'POST', { email, password });
+
   };
 
   return (
     <div className="flex h-screen bg-gray-100">
       <div className="m-auto w-96 bg-white rounded-lg shadow-lg p-8">
         <h2 className="text-2xl font-semibold mb-6">Sign in to your account</h2>
+        {successMessage && (
+          <div className="bg-green-200 text-green-800 p-4 mb-4">
+            Registration successful! You can now log in.
+          </div>
+        )}
+
+        {apiResponse.error && (
+          <div className="bg-red-200 text-red-800 p-4 mb-4">
+            Please Enter a valied email/passowrd
+          </div>
+        )}
         <form onSubmit={handleLogin}>
           <CustomeInput
             label="Email"
