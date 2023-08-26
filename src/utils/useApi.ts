@@ -41,7 +41,7 @@ function useApi<T>() {
         setApiResponse({ ...apiResponse, loading: true, error: null });
 
         const responseData = await callApi<T>(url, method, data);
-
+        console.log("responseData", responseData)
         setApiResponse({ data: responseData, error: null, loading: false });
       } catch (error) {
         setApiResponse({

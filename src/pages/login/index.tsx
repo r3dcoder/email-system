@@ -5,15 +5,18 @@ import CustomeInput from '@/components/CustomInput';
 import { useRouter } from 'next/router';
 import useApi from '@/utils/useApi';
 import { SIGN_IN } from '@/utils/api-urls';
+import { useAuth } from '@/context/auth-provider';
+import { SignInReponse, User } from '@/type/user';
 
 const LoginPage: React.FC = () => {
   const router = useRouter();
+  const { login } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const successMessage = router.query.success;
-  const { apiResponse, call } = useApi<any>();
 
+  const { apiResponse, call } = useApi<any>();
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     if (name === 'email') {
@@ -23,9 +26,25 @@ const LoginPage: React.FC = () => {
     }
   };
 
-  const handleLogin = (event: React.FormEvent) => {
+  const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
-    call(SIGN_IN, 'POST', { email, password });
+    try {
+      const a = call(SIGN_IN, 'POST', { email, password }).then((response) => {
+        console.log("apiResponse", apiResponse)
+
+        if (!apiResponse.error) {
+          const { token, user } = apiResponse.data
+          login(user, token);
+          router.push({
+            pathname: "/profile"
+          });
+        }
+      });
+
+
+    } catch (error) {
+      // Handle error case here
+    }
 
   };
 
