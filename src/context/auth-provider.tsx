@@ -7,6 +7,7 @@ interface AuthContextType {
     token: string | null;
     login: (userData: User, token: string) => void;
     logout: () => void;
+    loadStoredAuthData: () => void;
 }
 
 // Create the authentication context
@@ -22,14 +23,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [token, setToken] = useState<string | null>(null);
 
-    useEffect(() => {
-        const storedUser = sessionStorage.getItem('user');
-        const storedToken = sessionStorage.getItem('token');
-        if (storedUser && storedToken) {
-            setUser(JSON.parse(storedUser));
-            setToken(storedToken);
-        }
-    }, []);
+    // useEffect(() => {
+    //     loadStoredAuthData();
+    // }, []);
 
     const login = (userData: User, authToken: string) => {
         setUser(userData);
@@ -45,9 +41,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         sessionStorage.removeItem('token');
     };
 
+    // Load stored authentication data from local storage
+    const loadStoredAuthData = async () => {
+        const storedUser = await sessionStorage.getItem('user');
+        const storedToken = await sessionStorage.getItem('token');
+        if (storedUser && storedToken) {
+            console.log("storedUser", storedUser);
+            setUser(JSON.parse(storedUser));
+            setToken(storedToken);
+        }
+    };
+
     const authContextValue: AuthContextType = {
         user,
         token,
+        loadStoredAuthData,
         login,
         logout,
     };

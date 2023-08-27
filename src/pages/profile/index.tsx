@@ -1,29 +1,16 @@
-import { useAuth } from "@/context/auth-provider";
+import React from 'react';
+import AuthenticatedLayout from '../AuthenticatedLayout';
+import Header from '@/components/Header';
 
- 
-const ProfilePage = () => {
-    const { user, token, logout } = useAuth();
-
-    const handleLogout = () => {
-        logout();
-
-    };
-
+const ProfilePage: React.FC = () => {
     return (
-        <div>
-            {user ? (
-                <div>
-                    <h1>Welcome, {user.firstName}!</h1>
-                    {/* Display other user information */}
-                    <button onClick={handleLogout}>Logout</button>
-
-                    
-                </div>
-            ) : (
-                <p>You are not logged in.</p>
-            )}
-        </div>
+        <AuthenticatedLayout>
+            <Header />
+            <div>This content can only be accessed by authenticated users.</div>
+        </AuthenticatedLayout>
     );
 };
+
+
 
 export default ProfilePage;

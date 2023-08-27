@@ -80,97 +80,96 @@ const RegistrationForm: React.FC = () => {
 
 
     return (
-            <div className="m-auto w-full md:max-w-[450px] bg-white rounded-lg shadow-lg p-8">
-                <h2 className="text-2xl font-semibold mb-6 text-black">Create an Account</h2>
-                <div  >
-                    <CustomeInput
-                        label="First Name"
-                        type="text"
-                        id="name"
-                        name="firstName"
-                        placeholder="Enter your first name"
-                        value={formData.firstName}
-                        errorMsg={validationErrors.firstName}
-                        onChange={handleInputChange}
-                    />
+        <div className="m-auto w-full md:max-w-[450px] bg-white rounded-lg shadow-lg p-8">
+            <h2 className="text-2xl font-semibold mb-6 text-purple-500">Create an Account</h2>
+            <div  >
+                <CustomeInput
+                    label="First Name"
+                    type="text"
+                    id="name"
+                    name="firstName"
+                    placeholder="Enter your first name"
+                    value={formData.firstName}
+                    errorMsg={validationErrors.firstName}
+                    onChange={handleInputChange}
+                />
 
-                    <CustomeInput
-                        label="Last Name"
-                        type="text"
-                        id="name"
-                        name="lastName"
-                        placeholder="Enter your last name"
-                        value={formData.lastName}
-                        errorMsg={validationErrors.last}
-                        onChange={handleInputChange}
-                    />
-                    <CustomeInput
-                        label="Email"
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="Enter your email"
-                        value={formData.email}
-                        errorMsg={validationErrors.email}
-                        onChange={handleInputChange}
-                    />
+                <CustomeInput
+                    label="Last Name"
+                    type="text"
+                    id="name"
+                    name="lastName"
+                    placeholder="Enter your last name"
+                    value={formData.lastName}
+                    errorMsg={validationErrors.last}
+                    onChange={handleInputChange}
+                />
+                <CustomeInput
+                    label="Email"
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    value={formData.email}
+                    errorMsg={validationErrors.email}
+                    onChange={handleInputChange}
+                />
 
-                    <Select
-                        label="Gender"
-                        name="gender"
-                        value={formData.gender}
-                        options={[
-                            { value: 'male', label: 'Male' },
-                            { value: 'female', label: 'Female' },
-                            { value: 'other', label: 'Other' },
-                        ]}
-                        onChange={handleInputChange}
-                    />
-                    <CustomeInput
-                        label="Password"
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Enter your password"
-                        value={formData.password}
-                        errorMsg={validationErrors.password}
-                        onChange={handleInputChange}
-                    />
-                    <CustomeInput
-                        label="Confirm Password"
-                        type="password"
-                        id="confirmPassword"
-                        name="confirmPassword"
-                        placeholder="Confirm your password"
-                        value={formData.confirmPassword}
-                        errorMsg={validationErrors.password}
-                        onChange={handleInputChange}
-                    />
+                <Select
+                    label="Gender"
+                    name="gender"
+                    value={formData.gender}
+                    options={[
+                        { value: 'male', label: 'Male' },
+                        { value: 'female', label: 'Female' },
+                        { value: 'other', label: 'Other' },
+                    ]}
+                    onChange={handleInputChange}
+                />
+                <CustomeInput
+                    label="Password"
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    value={formData.password}
+                    errorMsg={validationErrors.password}
+                    onChange={handleInputChange}
+                />
+                <CustomeInput
+                    label="Confirm Password"
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    placeholder="Confirm your password"
+                    value={formData.confirmPassword}
+                    errorMsg={validationErrors.password}
+                    onChange={handleInputChange}
+                />
 
-                    {passwordMatchError && (
-                        <p className="text-red-500 text-sm mb-2">{passwordMatchError}</p>
-                    )}
-                    {
-                        apiResponse.loading ?
-                            <button
+                {passwordMatchError && (
+                    <p className="text-red-500 text-sm mb-2">{passwordMatchError}</p>
+                )}
+                {
+                    apiResponse.loading ?
+                        <button
 
-                                className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-blue-600"
-                            >
-                                Loading..
-                            </button>
-                            :
-                            <button
-                                onClick={() => handleSubmit()}
-                                className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-blue-600"
-                            >
-                                Register
-                            </button>
-                    }
-                </div>
-                <p className="mt-4 text-center text-sm text-gray-500">
-                    Already have an account? <Link href="/login" className="text-blue-500">Sign In</Link>.
-                </p>
+                            className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-blue-600"
+                        >
+                            Loading..
+                        </button>
+                        :
+
+                        <button onClick={() => handleSubmit()} className="bg-white text-purple-700 font-semibold text-sm mt-8 py-4 px-5 rounded-full border border-purple-300 uppercase flex items-center w-full hover:border-purple-700 hover:shadow-md transition duration-200 focus:outline-none focus:border-purple-700">
+                            Register
+                            <svg className="ml-auto text-purple-600 text-xl" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                        </button>
+                }
             </div>
+            <p className="mt-4 text-center text-sm text-gray-500">
+                Already have an account? <Link href="/login" className="text-blue-500">Sign In</Link>.
+            </p>
+        </div>
     );
 };
 

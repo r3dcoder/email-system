@@ -8,3 +8,8 @@ export const registrationValidationSchema: ValidationSchema = {
     confirmPassword: { required: true },
     // Define more validation rules as needed
   };
+
+  export const loginValidationSchema: ValidationSchema = {
+    email: { required: true },
+    password: { required: true }
+  };
