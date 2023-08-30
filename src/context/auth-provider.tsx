@@ -5,7 +5,9 @@ import React, { createContext, useContext, useState, ReactNode, useEffect } from
 interface AuthContextType {
     user: User | null;
     token: string | null;
+    googleAccessToken: string | null;
     login: (userData: User, token: string) => void;
+    setGAccessToken: ( token: string) => void;
     logout: () => void;
     loadStoredAuthData: () => void;
 }
@@ -22,21 +24,28 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [token, setToken] = useState<string | null>(null);
+    const [googleAccessToken, setGoogleAccessToken] = useState<string | null>(null);
 
     // useEffect(() => {
     //     loadStoredAuthData();
     // }, []);
 
+
+    const setGAccessToken = ( authToken: string) => {
+         setGoogleAccessToken(authToken); 
+    };
+
     const login = (userData: User, authToken: string) => {
         setUser(userData);
         setToken(authToken);
-        sessionStorage.setItem('user', JSON.stringify(userData));
+         sessionStorage.setItem('user', JSON.stringify(userData));
         sessionStorage.setItem('token', authToken);
     };
 
     const logout = () => {
         setUser(null);
         setToken(null);
+        setGoogleAccessToken(null)
         sessionStorage.removeItem('user');
         sessionStorage.removeItem('token');
     };
@@ -55,7 +64,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const authContextValue: AuthContextType = {
         user,
         token,
+        googleAccessToken,
         loadStoredAuthData,
+        setGAccessToken,
         login,
         logout,
     };

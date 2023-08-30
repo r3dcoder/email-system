@@ -16,7 +16,7 @@ const Select: React.FC<SelectProps> = ({ label, name, value, options, onChange }
         name={name}
         value={value}
         onChange={onChange}
-        className="w-full border-gray-200 rounded-md  p-1 text-black"
+        className="w-full border border-gray-200 rounded-md p-2 text-black focus:ring-indigo-600 focus:border-indigo-600"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>

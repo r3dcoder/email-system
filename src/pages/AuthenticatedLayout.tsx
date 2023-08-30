@@ -7,7 +7,7 @@ interface Props {
 }
 
 const AuthenticatedLayout: React.FC<Props> = ({ children }: Props) => {
-    const { user, loadStoredAuthData } = useAuth();
+    const { user, loadStoredAuthData , googleAccessToken} = useAuth();
     const router = useRouter();
     const [loading, setLoading] = useState(true);
 
@@ -20,7 +20,7 @@ const AuthenticatedLayout: React.FC<Props> = ({ children }: Props) => {
     }, [loading, loadStoredAuthData]);
 
     useEffect(() => {
-        if (!loading && user === null) {
+        if (!loading && user === null && googleAccessToken === null) {
             router.push('/login');
         }
     }, [user, loading, router]);
@@ -29,7 +29,7 @@ const AuthenticatedLayout: React.FC<Props> = ({ children }: Props) => {
         return <div>Loading...</div>;
     }
 
-    if (user) {
+    if (user || googleAccessToken) {
         return (
             <div>
                 {children}

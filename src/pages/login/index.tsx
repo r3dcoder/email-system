@@ -9,10 +9,12 @@ import { useAuth } from '@/context/auth-provider';
 import { SignInReponse, User } from '@/type/user';
 import { loginValidationSchema } from '@/utils/validation-schema';
 import { ValidationErrors, validateForm } from '@/utils/vallidation-utils';
+import { GoogleLogin } from '@react-oauth/google';
+import GoogleLoginButton from '@/components/GoogleLogin';
+import OAuthSignInButton from '@/components/OAuthSignInButton';
 
 const LoginPage: React.FC = () => {
   const router = useRouter();
-  const { login } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -44,7 +46,7 @@ const LoginPage: React.FC = () => {
 
           if (!apiResponse.error && apiResponse.data !=null) {
             const { token, user } = apiResponse.data
-            login(user, token);
+            LoginPage(user, token);
             router.push({
               pathname: "/profile"
             });
@@ -98,7 +100,9 @@ const LoginPage: React.FC = () => {
             errorMsg={validationErrors.passowrd}
             onChange={handleInputChange}
           />
-          <button className="bg-white text-purple-700 font-semibold text-sm mt-8 py-4 px-5 rounded-full border border-purple-300 uppercase flex items-center w-full hover:border-purple-700 hover:shadow-md transition duration-200 focus:outline-none focus:border-purple-700">
+           {/* <GoogleLoginButton/> */}
+           <OAuthSignInButton/>
+           <button className="bg-white text-purple-700 font-semibold text-sm mt-8 py-4 px-5 rounded-full border border-purple-300 uppercase flex items-center w-full hover:border-purple-700 hover:shadow-md transition duration-200 focus:outline-none focus:border-purple-700">
             Log In
             <svg className="ml-auto text-purple-600 text-xl" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
           </button>
